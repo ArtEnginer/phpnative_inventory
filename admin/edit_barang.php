@@ -118,18 +118,25 @@ include 'template/sidebar.php';
 
 
                   <select name="id_jenis" id="id_jenis" value="<?php echo $row['id_jenis']; ?>" class="form-control" required>
-
                     <?php
-                    $query2 = "select * from jenis_barang order by id_jenis";
-                    $tampil = mysqli_query($kon, $query2) or die(mysqli_error());
-                    while ($data1 = mysqli_fetch_array($tampil)) {
-                    ?>
-
-
-
-                      <option value="<?php echo $data1['id_jenis']; ?>"><?php echo $data1['nama_jenis']; ?></option>
-                    <?php
-
+                    // if old data is available show them in the select box
+                    if (isset($row['id_jenis'])) {
+                      $id_jenis = $row['id_jenis'];
+                      $query2 = "select * from jenis_barang order by id_jenis";
+                      $tampil = mysqli_query($kon, $query2) or die(mysqli_error());
+                      while ($data1 = mysqli_fetch_array($tampil)) {
+                        if ($id_jenis == $data1['id_jenis']) {
+                          echo "<option value='$data1[id_jenis]' selected>$data1[nama_jenis]</option>";
+                        } else {
+                          echo "<option value='$data1[id_jenis]'>$data1[nama_jenis]</option>";
+                        }
+                      }
+                    } else {
+                      $query2 = "select * from jenis_barang order by id_jenis";
+                      $tampil = mysqli_query($kon, $query2) or die(mysqli_error());
+                      while ($data1 = mysqli_fetch_array($tampil)) {
+                        echo "<option value='$data1[id_jenis]'>$data1[nama_jenis]</option>";
+                      }
                     }
 
                     ?>
