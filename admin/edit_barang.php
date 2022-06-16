@@ -37,9 +37,6 @@ include 'template/sidebar.php';
       <div class="row">
         <!-- left column -->
         <div class="col-md-6">
-
-
-
           <?php
           $id_barang = $_GET['id_barang'];
           $sql = mysqli_query($kon, "SELECT * FROM data_barang WHERE id_barang='$id_barang'");
@@ -49,10 +46,6 @@ include 'template/sidebar.php';
             $row = mysqli_fetch_assoc($sql);
           }
           if (isset($_POST['update'])) {
-
-
-
-
             $nama_barang = $_POST['nama_barang'];
             $id_jenis  = $_POST['id_jenis'];
             $stok = $_POST['stok'];
@@ -60,25 +53,27 @@ include 'template/sidebar.php';
             $warna  = $_POST['warna'];
             $ukuran  = $_POST['ukuran'];
 
-            var_dump($nama_satuan);
-            // die();
-
 
 
             $update = mysqli_query($kon, "UPDATE data_barang SET nama_barang='$nama_barang', id_jenis='$id_jenis', stok='$stok',id_satuan='$nama_satuan', warna='$warna', ukuran='$ukuran' WHERE id_barang='$id_barang'") or die(mysqli_error());
 
-
-
             if ($update) {
-              echo "<script>alert('Data Bertampil di ubah gan!'); window.location = 'data_barang.php'</script>";
+              echo "<script>window.location = 'data_barang.php'</script>";
+              $_SESSION['flash'] = '<div class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong>Data berhasil diupdate!</strong>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>';
             } else {
-              echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Data gagal disimpan, silahkan coba lagi.</div>';
+              $_SESSION['flash'] = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <strong>Data gagal diupdate!</strong>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>';
             }
           }
-
-          //if(isset($_GET['pesan']) == 'sukses'){
-          //  echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Data bertampil disimpan.</div>';
-          //}
           ?>
 
 
